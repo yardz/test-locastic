@@ -9,6 +9,8 @@ import { PublicPaths } from 'routes/publicRoutes/public.paths';
 import style from './workshopListItem.module.scss';
 import { cartActions } from 'store/cartReducer';
 import { useDevice } from 'hooks/useDevice';
+import { Button } from 'components/button';
+
 import { IconCart } from '../icon';
 
 interface Props {
@@ -44,11 +46,16 @@ export const WorkshopListItem: React.FC<Props> = ({ workshop }) => {
 				<Currency value={workshop.price} />
 
 				{device === 'desktop' ? (
-					<button onClick={addToCart}>Add to Cart</button>
+					<Button onClick={addToCart} style={{ width: '100%' }} color="Yellow">
+						Add to Cart
+					</Button>
 				) : (
-					<button onClick={addToCart}>
+					<Button
+						style={{ width: '40px', height: '40px', position: 'absolute', right: 10, bottom: 0, padding: 0 }}
+						onClick={addToCart}
+						color="Yellow">
 						<IconCart />
-					</button>
+					</Button>
 				)}
 			</div>
 		</div>

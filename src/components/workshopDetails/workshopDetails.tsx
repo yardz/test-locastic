@@ -12,6 +12,7 @@ import { IconCart } from 'components/icon';
 import { useDevice } from 'hooks/useDevice';
 import { useDispatch } from 'react-redux';
 import { cartActions } from 'store/cartReducer';
+import { Button } from 'components/button';
 
 const { format } = new Intl.NumberFormat('en', {
 	minimumFractionDigits: 2,
@@ -62,7 +63,7 @@ export const WorkshopDetails: React.FC<Props> = ({ workshop, user }) => {
 						<h5>Buy Your Ticket</h5>
 
 						<div className={style.price}>
-							<Currency value={workshop.price} big />
+							<Currency value={workshop.price} big={device === 'desktop'} />
 						</div>
 
 						<div className={style.quantity}>
@@ -76,13 +77,9 @@ export const WorkshopDetails: React.FC<Props> = ({ workshop, user }) => {
 									</option>
 								))}
 							</select>
-							{device === 'desktop' ? (
-								<button onClick={addToCart}>Add to Cart</button>
-							) : (
-								<button onClick={addToCart}>
-									<IconCart />
-								</button>
-							)}
+							<Button onClick={addToCart} style={{ width: '140px' }} color="Yellow">
+								<IconCart />
+							</Button>
 						</div>
 
 						<h6 className={style.subTotal}>Subtotal: {format(workshop.price * quantity)} EUR</h6>

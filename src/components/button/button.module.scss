@@ -1,0 +1,33 @@
+@import '../../assets/variables.scss';
+
+.button {
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 125%;
+
+	padding: 13.5px;
+	width: 100%;
+	text-align: center;
+
+	border: none;
+	margin: 20px auto;
+
+	box-shadow: 1px 2px 8px rgba(127, 127, 127, 0.25);
+	border-radius: 6px;
+
+	@media (max-width: $phone-size) {
+		border-radius: 4px;
+	}
+}
+
+.blue {
+	@extend .button;
+	color: $color-White;
+	background: $color-Blue;
+}
+.yellow {
+	@extend .button;
+	color: $color-DarkerGrey;
+	background: $color-Yellow;
+}

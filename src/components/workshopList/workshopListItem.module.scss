@@ -74,38 +74,6 @@
 			color: $color-Blue;
 			margin: 10px 0px;
 		}
-
-		button {
-			cursor: pointer;
-			font-weight: bold;
-			font-size: 18px;
-			line-height: 125%;
-
-			padding: 13.5px;
-			width: 100%;
-			text-align: center;
-
-			border: none;
-			margin: 20px auto;
-
-			color: $color-DarkerGrey;
-			background: $color-Yellow;
-			box-shadow: 1px 2px 8px rgba(127, 127, 127, 0.25);
-			border-radius: 6px;
-
-			@media (max-width: $phone-size) {
-				width: 40px;
-				height: 40px;
-
-				padding: 0px;
-
-				box-shadow: 1px 2px 8px rgba(127, 127, 127, 0.25);
-				border-radius: 4px;
-				position: absolute;
-				right: 20px;
-				bottom: 0px;
-			}
-		}
 	}
 
 	&:hover {

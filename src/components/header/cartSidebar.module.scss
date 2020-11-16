@@ -1,0 +1,54 @@
+@import '../../assets/variables.scss';
+
+.cartSidebar {
+	position: absolute;
+	display: flex;
+	justify-content: flex-end;
+	z-index: 100;
+	width: 380px;
+	right: 0px;
+
+	.menu {
+		background: $color-White;
+		padding: 29px 20px;
+		height: 100vh;
+		width: 100%;
+		box-shadow: -1px -2px 16px rgba(127, 127, 127, 0.25);
+
+		.title {
+			padding: 0px 20px;
+			display: flex;
+			justify-content: space-between;
+			// & > div {
+			// 	width: 210px;
+			// }
+			.cartContainer {
+				display: flex;
+				align-items: center;
+
+				.cart {
+					max-height: 47px;
+					height: 24px;
+					margin-right: 15px;
+
+					fill: $color-DarkerGrey;
+					* {
+						fill: $color-DarkerGrey;
+					}
+				}
+				.cartDescription {
+					@media (max-width: $phone-size) {
+						display: none;
+					}
+				}
+			}
+
+			svg {
+				cursor: pointer;
+			}
+		}
+
+		.checkout {
+		}
+	}
+}

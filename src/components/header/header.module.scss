@@ -4,7 +4,7 @@
 	position: fixed;
 	width: 100%;
 	top: 0;
-	z-index: 9999;
+	z-index: 10;
 }
 
 .header {
@@ -30,6 +30,7 @@
 		display: flex;
 		align-items: center;
 		position: relative;
+		cursor: pointer;
 
 		.alert {
 			width: 13px;
