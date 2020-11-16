@@ -1,0 +1,22 @@
+@import '../../assets/variables.scss';
+
+.footer {
+	background-color: $color-LightGrey;
+	display: flex;
+	align-items: center;
+
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 19px;
+	letter-spacing: 0em;
+	height: 80px;
+	padding-left: 80px;
+	// width: 100%;
+
+	@media (max-width: $phone-size) {
+		height: 48px;
+		font-size: 14px;
+		line-height: 17px;
+		padding-left: 40px;
+	}
+}

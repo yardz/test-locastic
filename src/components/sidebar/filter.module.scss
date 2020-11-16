@@ -1,0 +1,61 @@
+@import '../../assets/variables.scss';
+
+$icon-size: 24px;
+
+.sidebar {
+	margin-top: 50px;
+	padding-left: $icon-size + 10px;
+	.title {
+		color: $color-LightGrey;
+		margin-bottom: 30px;
+	}
+
+	.list {
+		li {
+			margin-bottom: 23px;
+			a {
+				display: flex;
+				align-items: center;
+
+				position: relative;
+				right: $icon-size + 10px;
+				color: $color-DarkerGrey;
+				text-decoration: none;
+				text-transform: capitalize;
+
+				font-weight: bold;
+				font-size: 23px;
+				line-height: 125%;
+
+				svg {
+					margin-right: 10px;
+					width: $icon-size;
+					fill: $color-DarkerGrey;
+					* {
+						fill: $color-DarkerGrey;
+					}
+				}
+
+				&:hover,
+				&.active {
+					color: $color-Blue;
+					svg {
+						fill: $color-Blue;
+						* {
+							fill: $color-Blue;
+						}
+					}
+				}
+
+				&.active {
+					text-decoration: underline;
+				}
+			}
+			&:first-child {
+				a {
+					right: 0px;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,10 @@
+@import '../../assets/variables.scss';
+
+.title {
+	color: $color-LightGrey;
+
+	span {
+		color: $color-DarkerGrey;
+		font-weight: 700;
+	}
+}

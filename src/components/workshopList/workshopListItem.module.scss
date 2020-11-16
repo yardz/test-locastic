@@ -1,0 +1,114 @@
+@import '../../assets/variables.scss';
+
+.box {
+	flex-basis: 320px;
+
+	background: $color-White;
+	border: 1px solid $color-LighterGrey;
+	box-sizing: border-box;
+	border-radius: 8px;
+
+	margin-bottom: 40px;
+	margin-right: 40px;
+
+	@media (max-width: $phone-size) {
+		margin-right: none;
+		flex-basis: 335px;
+
+		display: flex;
+	}
+
+	.boxImage {
+		position: relative;
+		.image {
+			border-radius: 8px 8px 0px 0px;
+			width: 320px;
+			height: 180px;
+
+			@media (max-width: $phone-size) {
+				border-radius: 8px 0px 0px 8px;
+				width: 105px;
+				height: 150px;
+			}
+		}
+		.icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			background: $color-DarkerGrey;
+			border-radius: 6px;
+			width: 40px;
+			height: 40px;
+
+			position: absolute;
+			bottom: -20px;
+			right: 20px;
+
+			@media (max-width: $phone-size) {
+				top: 10px;
+				right: -20px;
+			}
+
+			svg {
+				fill: $color-White;
+				* {
+					fill: $color-White;
+				}
+			}
+		}
+	}
+
+	.content {
+		padding: 20px 38px;
+		position: relative;
+
+		@media (max-width: $phone-size) {
+			padding: 20px 25px;
+		}
+
+		a {
+			text-decoration: none;
+		}
+		.title {
+			color: $color-Blue;
+			margin: 10px 0px;
+		}
+
+		button {
+			cursor: pointer;
+			font-weight: bold;
+			font-size: 18px;
+			line-height: 125%;
+
+			padding: 13.5px;
+			width: 100%;
+			text-align: center;
+
+			border: none;
+			margin: 20px auto;
+
+			color: $color-DarkerGrey;
+			background: $color-Yellow;
+			box-shadow: 1px 2px 8px rgba(127, 127, 127, 0.25);
+			border-radius: 6px;
+
+			@media (max-width: $phone-size) {
+				width: 40px;
+				height: 40px;
+
+				padding: 0px;
+
+				box-shadow: 1px 2px 8px rgba(127, 127, 127, 0.25);
+				border-radius: 4px;
+				position: absolute;
+				right: 20px;
+				bottom: 0px;
+			}
+		}
+	}
+
+	&:hover {
+		box-shadow: 1px 2px 16px rgba(127, 127, 127, 0.35);
+	}
+}

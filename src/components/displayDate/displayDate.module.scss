@@ -1,0 +1,23 @@
+@import '../../assets/variables.scss';
+
+.dateTime {
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 125%;
+
+	display: flex;
+	align-items: center;
+
+	h6 {
+		margin-right: 10px;
+	}
+
+	svg {
+		margin-right: 5px;
+
+		fill: $color-DarkerGrey;
+		* {
+			fill: $color-DarkerGrey;
+		}
+	}
+}

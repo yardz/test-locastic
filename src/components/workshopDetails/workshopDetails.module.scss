@@ -1,0 +1,129 @@
+@import '../../assets/variables.scss';
+.workshopDetails {
+	.image {
+		border-radius: 8px;
+		width: 100%;
+		margin-bottom: 40px;
+	}
+	.container {
+		display: flex;
+		justify-content: space-between;
+
+		.details {
+			flex-basis: 65%;
+			.metaData {
+				display: flex;
+				margin-bottom: 20px;
+
+				.icon {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					background: $color-DarkerGrey;
+					border-radius: 6px;
+					width: 40px;
+					height: 40px;
+
+					margin-right: 20px;
+
+					@media (max-width: $phone-size) {
+						top: 10px;
+						right: -20px;
+					}
+
+					svg {
+						fill: $color-White;
+						* {
+							fill: $color-White;
+						}
+					}
+				}
+			}
+
+			.author {
+				margin-bottom: 20px;
+				label {
+					font-weight: bold;
+					font-size: 18px;
+					line-height: 125%;
+					color: $color-Black;
+				}
+				h4 {
+					display: inline;
+				}
+			}
+
+			h1 {
+				color: $color-Blue;
+				margin-bottom: 20px;
+			}
+		}
+		.addCart {
+			flex-basis: 30%;
+			.box {
+				border-radius: 8px;
+				box-shadow: 1px 2px 16px rgba(127, 127, 127, 0.25);
+				padding: 50px 40px;
+
+				.price {
+					margin-top: 20px;
+					margin-bottom: 30px;
+					display: block;
+				}
+
+				.quantity {
+					select {
+						border: 1px solid $color-Blue;
+						box-sizing: border-box;
+						border-radius: 8px;
+						padding: 9px 8px;
+						font-size: 23px;
+						line-height: 125%;
+						margin-right: 10px;
+					}
+					button {
+						cursor: pointer;
+						font-weight: bold;
+						font-size: 18px;
+						line-height: 125%;
+
+						padding: 13.5px;
+						width: 187px;
+						text-align: center;
+
+						border: none;
+						margin: 20px auto;
+
+						color: $color-DarkerGrey;
+						background: $color-Yellow;
+						box-shadow: 1px 2px 8px rgba(127, 127, 127, 0.25);
+						border-radius: 6px;
+
+						@media (max-width: $phone-size) {
+							width: 40px;
+							height: 40px;
+
+							padding: 0px;
+
+							box-shadow: 1px 2px 8px rgba(127, 127, 127, 0.25);
+							border-radius: 4px;
+							position: absolute;
+							right: 20px;
+							bottom: 0px;
+						}
+					}
+				}
+
+				.subTotal {
+					text-align: right;
+					padding-right: 25px;
+					font-weight: 600;
+					font-size: 15px;
+					line-height: 125%;
+					color: $color-LightGrey;
+				}
+			}
+		}
+	}
+}
