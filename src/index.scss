@@ -1,0 +1,85 @@
+@import 'assets/variables.scss';
+
+$color-text: $color-DarkerGrey;
+
+body {
+	background: $color-White;
+	font-family: 'Livvic';
+	color: $color-text;
+}
+
+h1 {
+	font-family: Livvic;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 60px;
+	line-height: 120%;
+
+	color: $color-text;
+	@media (max-width: $phone-size) {
+		font-size: 36px;
+	}
+}
+
+h2 {
+	font-weight: bold;
+	font-size: 40px;
+	line-height: 125%;
+	color: $color-text;
+
+	@media (max-width: $phone-size) {
+		font-size: 32px;
+	}
+}
+
+h3 {
+	font-weight: bold;
+	font-size: 29px;
+	line-height: 125%;
+	color: $color-text;
+
+	@media (max-width: $phone-size) {
+		font-size: 20.3px;
+	}
+}
+
+h4 {
+	font-weight: bold;
+	font-size: 27px;
+	line-height: 125%;
+	color: $color-text;
+
+	@media (max-width: $phone-size) {
+		font-size: 18.9px;
+	}
+}
+
+h5 {
+	font-weight: bold;
+	font-size: 23px;
+	line-height: 125%;
+	color: $color-text;
+
+	@media (max-width: $phone-size) {
+		font-size: 18.4px;
+	}
+}
+
+h6 {
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 125%;
+	color: $color-text;
+
+	@media (max-width: $phone-size) {
+		font-size: 13.5px;
+	}
+}
+
+p {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 150%;
+	color: $color-text;
+}
