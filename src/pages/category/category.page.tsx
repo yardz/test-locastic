@@ -13,8 +13,9 @@ import { WorkshopList } from 'components/workshopList';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 
+const date_gte = dayjs().toISOString(); // today
+
 export const Category = () => {
-	const date_gte = dayjs().toISOString(); // today
 	const { category } = useParams<{ category: string }>();
 	const swr = useInfinite(['workshopListService', category], workshopListService, {
 		limit: 9,

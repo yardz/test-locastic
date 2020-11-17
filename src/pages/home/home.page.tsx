@@ -11,8 +11,9 @@ import { ItensCount } from 'components/itensCount';
 
 import { WorkshopList } from 'components/workshopList';
 
+const date_gte = dayjs().toISOString(); // today
+
 export const Home = () => {
-	const date_gte = dayjs().toISOString(); // today
 	const swr = useInfinite(['workshopListService'], workshopListService, { limit: 9, sort: 'date', filter: { date_gte } });
 
 	if (swr.isLoadingInitialData) {

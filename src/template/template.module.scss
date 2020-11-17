@@ -3,6 +3,7 @@
 .container {
 	padding: 0px $page-border;
 	display: flex;
+	overflow: hidden;
 
 	margin-top: $header-size-desktop + 60px;
 	@media (max-width: $phone-size) {
@@ -22,8 +23,8 @@
 	.page {
 		flex-basis: 80%;
 		@media (max-width: $phone-size) {
-			flex-basis: auto;
-			overflow: hidden;
+			flex-basis: 100%;
+			width: 0px;
 		}
 	}
 }

@@ -1,11 +1,10 @@
-import { IconCart, IconClose } from 'components/icon';
 import { Button } from 'components/button';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { cartSelectors, cartActions } from 'store/cartReducer';
-import style from './cartSidebar.module.scss';
 import { Currency } from 'components/currency';
-
+import { IconCart, IconClose } from 'components/icon';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartActions, cartSelectors } from 'store/cartReducer';
+import style from './cartSidebar.module.scss';
 import { CartSidebarItem } from './cartSidebarItem';
 
 export const CartSidebar = () => {

@@ -1,0 +1,9 @@
+@import '../../assets/variables.scss';
+
+$icon-size: 24px;
+
+.goBack {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
