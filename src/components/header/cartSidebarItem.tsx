@@ -20,7 +20,7 @@ export const CartSidebarItem: React.FC<Props> = ({ item }) => {
 	return (
 		<div className={style.cartItem} data-testid={`WorkshopListItem-${item.id}`}>
 			<div className={style.boxImage}>
-				<div className={style.image} style={{ backgroundImage: `url(${item.image})` }} />
+				<div className={style.image} style={{ backgroundImage: `url(${item.imageUrl})` }} />
 			</div>
 
 			<div className={style.content}>

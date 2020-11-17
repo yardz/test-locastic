@@ -33,7 +33,7 @@ export const WorkshopDetails: React.FC<Props> = ({ workshop, user, similarWorksh
 	const device = useDevice();
 
 	const addToCart = () => {
-		dispatch(cartActions.addItem({ id: workshop.id, price: workshop.price, title: workshop.title, image: workshop.imageUrl, quantity }));
+		dispatch(cartActions.addItem({ ...workshop, quantity }));
 	};
 
 	return (

@@ -24,7 +24,7 @@ export const WorkshopListItem: React.FC<Props> = ({ workshop }) => {
 
 	const addToCart = () => {
 		dispatch(cartActions.openCart());
-		dispatch(cartActions.addItem({ id: workshop.id, price: workshop.price, title: workshop.title, image: workshop.imageUrl, quantity: 1 }));
+		dispatch(cartActions.addItem({ ...workshop, quantity: 1 }));
 	};
 
 	return (

@@ -6,10 +6,12 @@ import storage from 'redux-persist/lib/storage';
 // slices
 import { authSlice } from './authReducer';
 import { cartSlice } from './cartReducer';
+import { checkoutSlice } from './checkoutReducer';
 
 const reducers = combineReducers({
 	auth: authSlice.reducer,
 	cart: cartSlice.reducer,
+	checkout: checkoutSlice.reducer,
 });
 
 const persistConfig = {

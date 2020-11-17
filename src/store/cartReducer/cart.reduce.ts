@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Workshop } from 'domain/workshop';
 import { RootState } from 'store';
 
-export interface Item {
-	id: number;
-	title: string;
-	price: number;
+export interface Item extends Workshop {
 	quantity: number;
-	image: string;
 }
 export interface Cart {
 	itens: Item[];
@@ -20,11 +17,15 @@ const initialState: Cart = {
 	isOpen: false,
 };
 
+interface AddItem extends Workshop {
+	quantity?: number;
+}
+
 export const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
-		addItem: (state, action: PayloadAction<{ id: number; title: string; price: number; image: string; quantity?: number }>) => {
+		addItem: (state, action: PayloadAction<AddItem>) => {
 			const index = state.itens.findIndex(i => i.id === action.payload.id);
 			const quantity = action.payload.quantity || 1;
 			if (index >= 0) {
