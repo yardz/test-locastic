@@ -3,13 +3,15 @@
 $color-text: $color-DarkerGrey;
 
 body {
+	font-family: Livvic;
 	background: $color-White;
-	font-family: 'Livvic';
 	color: $color-text;
+	* {
+		font-family: Livvic;
+	}
 }
 
 h1 {
-	font-family: Livvic;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 60px;

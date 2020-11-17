@@ -36,7 +36,6 @@ export const CartSidebar = () => {
 					<div
 						onClick={() => {
 							dispatch(cartActions.closeCart());
-							dispatch(cartActions.removeNotification());
 						}}>
 						<IconClose />
 					</div>
@@ -52,6 +51,7 @@ export const CartSidebar = () => {
 					<Button
 						onClick={() => {
 							dispatch(checkoutActions.start(itens));
+							dispatch(cartActions.closeCart());
 						}}
 						color="Blue"
 						style={{ width: '100%' }}>

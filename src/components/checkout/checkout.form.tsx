@@ -1,26 +1,49 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../button';
 
-import { checkoutActions } from 'store/checkoutReducer';
+import { checkoutActions, checkoutSelectors } from 'store/checkoutReducer';
 
 import { Formik, Form } from 'formik';
+import { Input } from './input';
+import { Select } from './select';
+
+import { orderCreateService } from 'services/order.create';
+import { UserCheckout } from 'domain/checkout';
+
 import style from './checkout.form.module.scss';
 
-interface UserCheckout {
-	firstName: string;
-	lastName: string;
-	email: string;
-	dateOfBirth: string;
-	gender: string;
-	address: string;
-	zipCode: string;
-	agree: boolean;
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+	firstName: Yup.string()
+		.trim()
+		.required('First Name is a required field')
+		.matches(/^[a-zA-Z\s]*$/, 'Must be only letters'),
+	lastName: Yup.string()
+		.trim()
+		.required('Last Name is a required field')
+		.matches(/^[a-zA-Z\s]*$/, 'Must be only letters'),
+	email: Yup.string().trim().required('Email Address is a required field').email('Email Address must be a valid email'),
+	dateOfBirth: Yup.date().required('Date is a required field'),
+	gender: Yup.string().trim().required('Gender is a required field'),
+	address: Yup.string().trim().required('Address is a required field'),
+	zipCode: Yup.string()
+		.trim()
+		.required('Zip Code is a required field')
+		.matches(/^[0-9]+$/, 'Must be only digits')
+		.min(5, 'Must be exactly 5 digits')
+		.max(5, 'Must be exactly 5 digits'),
+});
+
+interface InitalProps extends Omit<UserCheckout, 'dateOfBirth'> {
+	dateOfBirth: Date | '';
 }
 
 export const CheckoutForm = () => {
 	const dispatch = useDispatch();
-	const initialValues: UserCheckout = {
+	const order = useSelector(checkoutSelectors.getOrder);
+	const initialValues: InitalProps = {
 		firstName: '',
 		lastName: '',
 		email: '',
@@ -33,30 +56,44 @@ export const CheckoutForm = () => {
 	return (
 		<Formik
 			initialValues={initialValues}
+			validationSchema={validationSchema}
 			onSubmit={(userCheckout, actions) => {
-				console.log({ userCheckout });
-				dispatch(checkoutActions.done());
-
-				actions.setSubmitting(false);
+				const user = userCheckout as UserCheckout;
+				orderCreateService({ user, order })
+					.finally(() => {
+						actions.setSubmitting(false);
+					})
+					.then(() => dispatch(checkoutActions.done()));
 			}}>
 			{props => (
 				<Form>
 					<div className={style.container}>
-						<div>Text 1</div>
-						<div>Text 2</div>
-						<div>Text 3</div>
-						<div>Text 4</div>
-						<div>Text 5</div>
-						<div>Text 6</div>
-						<div>Text 7</div>
-						<div>Text 8</div>
-						<div>Text 9</div>
-						<div>Text 10</div>
-						<div>Text 11</div>
-						<div>Text 12</div>
-						<div>Text 13</div>
+						<div className={style.field}>
+							<Input label="First Name" name="firstName" placeholder="Type your first name here" />
+						</div>
+						<div className={style.field}>
+							<Input label="Last Name" name="lastName" placeholder="Type your last name here" />
+						</div>
+						<div className={style.field}>
+							<Input label="Email Address" name="email" placeholder="Type your email address here" />
+						</div>
+						<div className={style.fieldDuble}>
+							<div>
+								<Input label="Date of Birth" type="date" name="dateOfBirth" placeholder="Type your date of birth here" />
+							</div>
+							<div>
+								<Select label="Gender" name="gender" placeholder="Select your Gender here" options={['Female', 'Male', 'Other']} />
+							</div>
+						</div>
+						<div className={style.field}>
+							<Input label="Address" name="address" placeholder="Type your address here" />
+						</div>
+						<div className={style.field}>
+							<Input label="Zip Code" name="zipCode" placeholder="eg. 21310" />
+						</div>
 
 						<Button
+							disabled={props.isSubmitting}
 							type="submit"
 							color="Yellow"
 							style={{ width: 167, margin: '0px' }}

@@ -61,6 +61,7 @@ export const cartSlice = createSlice({
 			state.isOpen = true;
 		},
 		closeCart: state => {
+			state.notification = false;
 			state.isOpen = false;
 		},
 	},

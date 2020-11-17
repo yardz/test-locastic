@@ -2,7 +2,16 @@
 	display: flex;
 	flex-direction: column;
 
-	& > div {
+	.field {
 		margin-bottom: 35px;
+	}
+
+	.fieldDuble {
+		display: flex;
+		justify-content: space-between;
+
+		& > div {
+			width: 48%;
+		}
 	}
 }

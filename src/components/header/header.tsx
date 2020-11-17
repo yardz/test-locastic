@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { PublicPaths } from 'routes/publicRoutes/public.paths';
 import { cartActions, cartSelectors } from 'store/cartReducer';
 import { IconCart } from '../icon';
-import { CartSidebar } from './cartSidebar';
+import { CartSidebar } from '../cartSidebar';
 import style from './header.module.scss';
 
 export const Header = () => {
