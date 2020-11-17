@@ -4,6 +4,7 @@ import { IconCart, IconClose } from 'components/icon';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartActions, cartSelectors } from 'store/cartReducer';
+import { checkoutActions } from 'store/checkoutReducer';
 import style from './cartSidebar.module.scss';
 import { CartSidebarItem } from './cartSidebarItem';
 
@@ -48,7 +49,12 @@ export const CartSidebar = () => {
 				<div className={style.checkout}>
 					<h6 className={style.subtotal}>SUBTOTAL</h6>
 					<Currency value={subtotal} />
-					<Button onClick={() => {}} color="Blue" style={{ width: '100%' }}>
+					<Button
+						onClick={() => {
+							dispatch(checkoutActions.start(itens));
+						}}
+						color="Blue"
+						style={{ width: '100%' }}>
 						Checkout
 					</Button>
 				</div>

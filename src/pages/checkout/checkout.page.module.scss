@@ -1,0 +1,49 @@
+@import '../../assets/variables.scss';
+
+.modal {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	z-index: 1000;
+	height: 100vh;
+	background-color: rgba($color-DarkerGrey, 0.6);
+
+	.box {
+		width: 760px;
+		max-width: 100%;
+		margin: 0 auto;
+		margin-top: 60px;
+		background: $color-White;
+		height: 80vh;
+		position: relative;
+		overflow: scroll;
+
+		.container {
+			padding: 80px 90px;
+
+			.header {
+				display: flex;
+				align-items: center;
+				align-content: space-between;
+				position: relative;
+
+				h2 {
+					display: inline;
+				}
+				& > div {
+					cursor: pointer;
+					position: absolute;
+					right: 0px;
+				}
+			}
+			.description {
+				max-width: 300px;
+				color: $color-LightGrey;
+				font-weight: 600;
+				font-size: 15px;
+				line-height: 125%;
+				margin: 15px 0px;
+			}
+		}
+	}
+}
