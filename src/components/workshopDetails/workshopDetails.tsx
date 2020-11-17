@@ -37,6 +37,12 @@ export const WorkshopDetails: React.FC<Props> = ({ workshop, user }) => {
 	return (
 		<div className={style.workshopDetails}>
 			<img className={style.image} src={workshop.imageUrl} alt="" />
+			{/* <div className={style.image} style={{ backgroundImage: `url(${workshop.imageUrl})` }} /> */}
+
+			{/* <div className={style.imageContainer}>
+				<img src="" alt="" />
+			</div> */}
+
 			<div className={style.container}>
 				<div className={style.details}>
 					<div className={style.metaData}>

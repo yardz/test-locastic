@@ -4,16 +4,17 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartSelectors, cartActions } from 'store/cartReducer';
 import style from './cartSidebar.module.scss';
-interface Props {
-	close: () => void;
-}
+import { Currency } from 'components/currency';
 
-export const CartSidebar: React.FC<Props> = ({ close }) => {
+import { CartSidebarItem } from './cartSidebarItem';
+
+export const CartSidebar = () => {
 	const itens = useSelector(cartSelectors.itens);
 	const notification = useSelector(cartSelectors.notification);
 	const dispatch = useDispatch();
 
 	const total = itens.reduce((total, item) => total + item.quantity, 0);
+	const subtotal = itens.reduce((total, item) => total + item.quantity * item.price, 0);
 
 	let message = 'Cart is Empty';
 	if (total === 1) {
@@ -23,26 +24,31 @@ export const CartSidebar: React.FC<Props> = ({ close }) => {
 		message = `${total} Workshops in Cart`;
 	}
 
-	useEffect(() => {
-		if (notification) {
-			dispatch(cartActions.removeNotification());
-		}
-	}, [dispatch, notification]);
-
 	return (
 		<div className={style.cartSidebar}>
 			<div className={style.menu}>
 				<div className={style.title}>
 					<div className={style.cartContainer}>
+						{notification && <div className={style.alert} />}
 						<IconCart className={style.cart} />
 						<h6 className={style.cartDescription}>{message}</h6>
 					</div>
-					<div onClick={() => close()}>
+					<div
+						onClick={() => {
+							dispatch(cartActions.closeCart());
+							dispatch(cartActions.removeNotification());
+						}}>
 						<IconClose />
 					</div>
 				</div>
-				<div className={style.content}></div>
+				<div className={style.content}>
+					{itens.map(item => (
+						<CartSidebarItem key={item.id} item={item} />
+					))}
+				</div>
 				<div className={style.checkout}>
+					<h6 className={style.subtotal}>SUBTOTAL</h6>
+					<Currency value={subtotal} />
 					<Button onClick={() => {}} color="Blue" style={{ width: '100%' }}>
 						Checkout
 					</Button>

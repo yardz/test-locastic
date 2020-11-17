@@ -24,6 +24,8 @@
 			border-radius: 8px 8px 0px 0px;
 			width: 320px;
 			height: 180px;
+			background-size: cover;
+			background-position: center;
 
 			@media (max-width: $phone-size) {
 				border-radius: 8px 0px 0px 8px;

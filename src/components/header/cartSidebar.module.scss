@@ -8,23 +8,40 @@
 	width: 380px;
 	right: 0px;
 
+	@media (max-width: $phone-size) {
+		width: 100%;
+	}
+
 	.menu {
 		background: $color-White;
-		padding: 29px 20px;
+		padding: 0px 20px;
 		height: 100vh;
+		overflow: scroll;
 		width: 100%;
 		box-shadow: -1px -2px 16px rgba(127, 127, 127, 0.25);
 
 		.title {
-			padding: 0px 20px;
+			padding: 29px 20px 0px;
 			display: flex;
 			justify-content: space-between;
+			margin-bottom: 20px;
 			// & > div {
 			// 	width: 210px;
 			// }
 			.cartContainer {
 				display: flex;
 				align-items: center;
+				position: relative;
+
+				.alert {
+					width: 13px;
+					height: 13px;
+					background: $color-Blue;
+					border-radius: 100%;
+					position: absolute;
+					top: -1px;
+					left: 18px;
+				}
 
 				.cart {
 					max-height: 47px;
@@ -47,8 +64,13 @@
 				cursor: pointer;
 			}
 		}
-
+		.content {
+		}
 		.checkout {
+			padding: 0px 20px;
+			.subtotal {
+				color: $color-LightGrey;
+			}
 		}
 	}
 }

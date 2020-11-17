@@ -11,11 +11,13 @@ export interface Item {
 export interface Cart {
 	itens: Item[];
 	notification: boolean;
+	isOpen: boolean;
 }
 
 const initialState: Cart = {
 	itens: [],
 	notification: false,
+	isOpen: false,
 };
 
 export const cartSlice = createSlice({
@@ -54,6 +56,12 @@ export const cartSlice = createSlice({
 			state.itens = [];
 			state.notification = false;
 		},
+		openCart: state => {
+			state.isOpen = true;
+		},
+		closeCart: state => {
+			state.isOpen = false;
+		},
 	},
 });
 
@@ -61,4 +69,5 @@ export const cartActions = cartSlice.actions;
 export const cartSelectors = {
 	itens: (state: RootState) => state.cart.itens,
 	notification: (state: RootState) => state.cart.notification,
+	isOpen: (state: RootState) => state.cart.isOpen,
 };

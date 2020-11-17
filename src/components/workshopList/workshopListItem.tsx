@@ -23,14 +23,17 @@ export const WorkshopListItem: React.FC<Props> = ({ workshop }) => {
 	const device = useDevice();
 
 	const addToCart = () => {
+		dispatch(cartActions.openCart());
 		dispatch(cartActions.addItem({ id: workshop.id, price: workshop.price, title: workshop.title, image: workshop.imageUrl, quantity: 1 }));
 	};
 
 	return (
 		<div className={style.box} data-testid={`WorkshopListItem-${workshop.id}`}>
 			<div className={style.boxImage}>
-				<img className={style.image} src={workshop.imageUrl} alt="" />
-
+				<Link to={PublicPaths.details.replace(':workshopId', workshop.id.toString())}>
+					{/* <img className={style.image} src={workshop.imageUrl} alt="" /> */}
+					<div className={style.image} style={{ backgroundImage: `url(${workshop.imageUrl})` }} />
+				</Link>
 				<div className={style.icon}>
 					<CategoryIcon category={workshop.category} />
 				</div>

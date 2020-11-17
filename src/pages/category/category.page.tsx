@@ -11,10 +11,16 @@ import { ItensCount } from 'components/itensCount';
 
 import { WorkshopList } from 'components/workshopList';
 import { useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 export const Category = () => {
+	const date_gte = dayjs().toISOString(); // today
 	const { category } = useParams<{ category: string }>();
-	const swr = useInfinite(['workshopListService', category], workshopListService, { limit: 9, sort: 'date', filter: { category } });
+	const swr = useInfinite(['workshopListService', category], workshopListService, {
+		limit: 9,
+		sort: 'date',
+		filter: { category, date_gte },
+	});
 
 	if (swr.isLoadingInitialData) {
 		return <Loading />;

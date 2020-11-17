@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { PublicPaths } from 'routes/publicRoutes/public.paths';
@@ -8,9 +8,9 @@ import { CartSidebar } from './cartSidebar';
 import style from './header.module.scss';
 
 export const Header = () => {
-	const [showSidebar, setShowSidebar] = useState(true);
 	const itens = useSelector(cartSelectors.itens);
 	const notification = useSelector(cartSelectors.notification);
+	const cartOpen = useSelector(cartSelectors.isOpen);
 	const dispatch = useDispatch();
 
 	const total = itens.reduce((total, item) => total + item.quantity, 0);
@@ -25,13 +25,7 @@ export const Header = () => {
 
 	return (
 		<div className={style.fixed}>
-			{showSidebar && (
-				<CartSidebar
-					close={() => {
-						setShowSidebar(false);
-					}}
-				/>
-			)}
+			{cartOpen && <CartSidebar />}
 			<header className={style.header}>
 				<Link to={PublicPaths.home}>
 					<img className={style.logo} src="/images/logo.svg" alt="" />
@@ -40,8 +34,7 @@ export const Header = () => {
 				<div
 					className={style.cartContainer}
 					onClick={() => {
-						setShowSidebar(true);
-						dispatch(cartActions.removeNotification());
+						dispatch(cartActions.openCart());
 					}}>
 					{notification && <div className={style.alert} />}
 					<IconCart className={style.cart} />

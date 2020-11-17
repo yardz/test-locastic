@@ -1,5 +1,5 @@
 import React from 'react';
-
+import dayjs from 'dayjs';
 import { workshopListService } from 'services/workshop.list';
 
 import { useInfinite } from 'hooks/useInfinite';
@@ -12,7 +12,8 @@ import { ItensCount } from 'components/itensCount';
 import { WorkshopList } from 'components/workshopList';
 
 export const Home = () => {
-	const swr = useInfinite(['workshopListService'], workshopListService, { limit: 9, sort: 'date' });
+	const date_gte = dayjs().toISOString(); // today
+	const swr = useInfinite(['workshopListService'], workshopListService, { limit: 9, sort: 'date', filter: { date_gte } });
 
 	if (swr.isLoadingInitialData) {
 		return <Loading />;
