@@ -38,7 +38,7 @@ export const WorkshopDetails: React.FC<Props> = ({ workshop, user, similarWorksh
 
 	return (
 		<>
-			<div className={style.workshopDetails}>
+			<div data-testid="details" className={style.workshopDetails}>
 				<img className={style.image} src={workshop.imageUrl} alt="" />
 				{/* <div className={style.image} style={{ backgroundImage: `url(${workshop.imageUrl})` }} /> */}
 
@@ -48,7 +48,7 @@ export const WorkshopDetails: React.FC<Props> = ({ workshop, user, similarWorksh
 
 				<div className={style.container}>
 					<div className={style.details}>
-						<div className={style.metaData}>
+						<div data-testid="detail-meta" className={style.metaData}>
 							<div className={style.icon}>
 								<CategoryIcon category={workshop.category} />
 							</div>
@@ -57,7 +57,7 @@ export const WorkshopDetails: React.FC<Props> = ({ workshop, user, similarWorksh
 
 						<h1>{workshop.title}</h1>
 
-						<div className={style.author}>
+						<div data-testid="detail-with" className={style.author}>
 							<label>WITH: </label>
 							<h4>{user?.name || <Skeleton width={200} />}</h4>
 						</div>
@@ -71,7 +71,7 @@ export const WorkshopDetails: React.FC<Props> = ({ workshop, user, similarWorksh
 						<div className={style.box}>
 							<h5>Buy Your Ticket</h5>
 
-							<div className={style.price}>
+							<div data-testid="detail-price" className={style.price}>
 								<Currency value={workshop.price} big={device === 'desktop'} />
 							</div>
 

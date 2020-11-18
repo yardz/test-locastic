@@ -1,12 +1,10 @@
-import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-
-import { PublicPaths } from './public.paths';
-
-import { Error404 } from 'pages/error/error.404.page';
-import { Home } from 'pages/home/home.page';
 import { Category } from 'pages/category/category.page';
 import { Details } from 'pages/details/details.page';
+import { Error404 } from 'pages/error/error.404.page';
+import { Home } from 'pages/home/home.page';
+import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { PublicPaths } from './public.paths';
 
 export function PublicRoute() {
 	return (

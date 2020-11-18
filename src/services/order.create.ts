@@ -1,8 +1,7 @@
-import axios from 'axios';
 import to from 'await-to-js';
-
-import { Order } from 'domain/order';
+import axios from 'axios';
 import { UserCheckout } from 'domain/checkout';
+import { Order } from 'domain/order';
 
 interface Args {
 	user: UserCheckout; // will be used in the future.

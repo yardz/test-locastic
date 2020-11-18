@@ -9,7 +9,7 @@ interface Props {
 export const ItensCount: React.FC<Props> = ({ itens }) => {
 	return (
 		<h6 className={style.title}>
-			Displayed: <span>{itens}</span>
+			Displayed: <span data-testid="ItensCount">{itens}</span>
 		</h6>
 	);
 };

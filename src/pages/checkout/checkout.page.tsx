@@ -1,11 +1,9 @@
+import { CheckoutCompleted } from 'components/checkout/checkout.completed';
+import { CheckoutForm } from 'components/checkout/checkout.form';
 import { IconClose } from 'components/icon';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkoutActions, checkoutSelectors } from 'store/checkoutReducer';
-
-import { CheckoutCompleted } from 'components/checkout/checkout.completed';
-import { CheckoutForm } from 'components/checkout/checkout.form';
-
 import style from './checkout.page.module.scss';
 
 export const Checkout = () => {

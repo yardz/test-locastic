@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Item } from '../cartReducer';
 import { Order } from 'domain/order';
 import { RootState } from 'store';
+import { Item } from '../cartReducer';
 
 export interface Checkout {
 	products: Item[];

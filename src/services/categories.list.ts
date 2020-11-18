@@ -1,5 +1,5 @@
-import axios from 'axios';
 import to from 'await-to-js';
+import axios from 'axios';
 
 export const categoriesListService = async (): Promise<string[]> => {
 	const [err, data] = await to(axios.get<string[]>('/categories'));

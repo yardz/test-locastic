@@ -1,14 +1,12 @@
+import { Loading } from 'components/loading';
+import { WorkshopDetails } from 'components/workshopDetails';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useSwr from 'swr';
-
-import { workshopSingleService } from 'services/workshop.single';
 import { userSingleService } from 'services/user.single';
-
-import { WorkshopDetails } from 'components/workshopDetails';
-import { Loading } from 'components/loading';
 import { workshopListService } from 'services/workshop.list';
-import dayjs from 'dayjs';
+import { workshopSingleService } from 'services/workshop.single';
+import useSwr from 'swr';
 
 const date_gte = dayjs().toISOString(); // today
 
@@ -39,8 +37,7 @@ export const Details = () => {
 	);
 
 	if (workshop.error) {
-		// error
-		console.log('TRATAR ERRO');
+		// error... swr will retry
 	}
 	if (!workshop.data) {
 		return <Loading />;

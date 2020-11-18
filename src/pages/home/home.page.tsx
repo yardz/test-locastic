@@ -1,15 +1,12 @@
-import React from 'react';
-import dayjs from 'dayjs';
-import { workshopListService } from 'services/workshop.list';
-
-import { useInfinite } from 'hooks/useInfinite';
-
-import { LoadMore } from 'components/loadMore';
-import { Loading } from 'components/loading';
-import { PageTitle } from 'components/pageTitle';
 import { ItensCount } from 'components/itensCount';
-
+import { Loading } from 'components/loading';
+import { LoadMore } from 'components/loadMore';
+import { PageTitle } from 'components/pageTitle';
 import { WorkshopList } from 'components/workshopList';
+import dayjs from 'dayjs';
+import { useInfinite } from 'hooks/useInfinite';
+import React from 'react';
+import { workshopListService } from 'services/workshop.list';
 
 const date_gte = dayjs().toISOString(); // today
 
@@ -25,7 +22,7 @@ export const Home = () => {
 			<PageTitle>Workshops</PageTitle>
 			<ItensCount itens={swr.isLoading ? 0 : swr.data.length} />
 			<WorkshopList workshops={swr.data} />
-			<LoadMore loading={swr.isLoading} load={swr.nextPage} />
+			{!swr.error && <LoadMore loading={swr.isLoading} load={swr.nextPage} />}
 		</>
 	);
 };

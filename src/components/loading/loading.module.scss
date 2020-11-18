@@ -1,0 +1,52 @@
+@import '../../assets/variables.scss';
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 30px;
+	height: 30px;
+
+	animation-name: spin;
+	animation-duration: 2000ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+
+	border: 7px solid $color-Yellow;
+	border-top-color: transparent;
+
+	border-radius: 100%;
+}
+
+.inner {
+	width: 10px;
+	height: 10px;
+
+	animation-name: spinReverse;
+	animation-duration: 1000ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+
+	border: 7px solid $color-Blue;
+	border-top-color: transparent;
+
+	border-radius: 100%;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes spinReverse {
+	from {
+		transform: rotate(360deg);
+	}
+	to {
+		transform: rotate(0deg);
+	}
+}

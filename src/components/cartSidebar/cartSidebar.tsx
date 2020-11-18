@@ -48,15 +48,17 @@ export const CartSidebar = () => {
 				<div className={style.checkout}>
 					<h6 className={style.subtotal}>SUBTOTAL</h6>
 					<Currency value={subtotal} />
-					<Button
-						onClick={() => {
-							dispatch(checkoutActions.start(itens));
-							dispatch(cartActions.closeCart());
-						}}
-						color="Blue"
-						style={{ width: '100%' }}>
-						Checkout
-					</Button>
+					{itens.length > 0 && (
+						<Button
+							onClick={() => {
+								dispatch(checkoutActions.start(itens));
+								dispatch(cartActions.closeCart());
+							}}
+							color="Blue"
+							style={{ width: '100%' }}>
+							Checkout
+						</Button>
+					)}
 				</div>
 			</div>
 		</div>

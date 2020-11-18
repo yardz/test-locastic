@@ -9,6 +9,7 @@ import { categoriesListService } from 'services/categories.list';
 import useSwr from 'swr';
 
 import { CategoryIcon } from '../icon/CategoryIcon';
+import { Loading } from 'components/loading';
 
 export const Filter = () => {
 	const categories = useSwr('categories', () => categoriesListService());
@@ -26,6 +27,7 @@ export const Filter = () => {
 						All
 					</Link>
 				</li>
+				{categoriesList.length === 0 && <Loading />}
 				{categoriesList.map(category => (
 					<li key={category}>
 						<Link

@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { PublicPaths, PublicRoute } from './publicRoutes';
 
 export const Routes: FunctionComponent = () => {

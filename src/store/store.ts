@@ -4,12 +4,10 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from 'redux-persist/lib/storage';
 
 // slices
-import { authSlice } from './authReducer';
 import { cartSlice } from './cartReducer';
 import { checkoutSlice } from './checkoutReducer';
 
 const reducers = combineReducers({
-	auth: authSlice.reducer,
 	cart: cartSlice.reducer,
 	checkout: checkoutSlice.reducer,
 });
@@ -18,7 +16,6 @@ const persistConfig = {
 	key: 'root',
 	version: 1,
 	storage,
-	blacklist: ['auth'],
 };
 const persistedReducer = persistReducer(persistConfig, reducers);
 
