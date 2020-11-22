@@ -23,7 +23,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:mocks": "json-server --watch mocks/db.json"
+    "format": "prettier --write \"src/**/*.ts{,x}\"",
+    "start:mocks": "json-server --watch mocks/db.json",
+    "lint:ts": "tslint -p tsconfig.json -c tslint.json",
+    "lint:es": "eslint --max-warnings=0 --ext js,jsx,ts,tsx src",
+    "lint": "npm run lint:ts && npm run lint:es"
   },
   "eslintConfig": {
     "extends": "react-app"

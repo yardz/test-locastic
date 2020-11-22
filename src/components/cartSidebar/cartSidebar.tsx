@@ -13,8 +13,8 @@ export const CartSidebar = () => {
 	const notification = useSelector(cartSelectors.notification);
 	const dispatch = useDispatch();
 
-	const total = itens.reduce((total, item) => total + item.quantity, 0);
-	const subtotal = itens.reduce((total, item) => total + item.quantity * item.price, 0);
+	const total = itens.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0);
+	const subtotal = itens.reduce((totalPrice, item) => totalPrice + item.quantity * item.price, 0);
 
 	let message = 'Cart is Empty';
 	if (total === 1) {

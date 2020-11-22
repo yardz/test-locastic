@@ -13,7 +13,7 @@ export const Header = () => {
 	const cartOpen = useSelector(cartSelectors.isOpen);
 	const dispatch = useDispatch();
 
-	const total = itens.reduce((total, item) => total + item.quantity, 0);
+	const total = itens.reduce((totalQuantity, item) => totalQuantity + item.quantity, 0);
 
 	let message = 'Cart is Empty';
 	if (total === 1) {

@@ -1,5 +1,5 @@
+// tslint:disable: max-file-line-count
 import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react';
-import { useInfinite } from 'hooks/useInfinite';
 import React from 'react';
 import { store } from 'store';
 import { renderPage } from 'test-utils';

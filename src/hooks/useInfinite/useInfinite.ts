@@ -7,6 +7,7 @@ interface Options extends Omit<ListArgs, 'page'> {
 	initialPage?: number;
 }
 
+// tslint:disable-next-line: no-any
 export const useInfinite = <T>(key: string | any[], serviceList: (args?: ListArgs) => Promise<T[]>, options: Options) => {
 	const { limit } = options;
 	const { initialPage, ...args } = options;
@@ -34,13 +35,13 @@ export const useInfinite = <T>(key: string | any[], serviceList: (args?: ListArg
 
 	const nextPage = () => {
 		if (hasNextPage) {
-			setSize(size + 1);
+			setSize(size + 1).catch(() => console.log('error'));
 		}
 	};
 
 	const prevPage = () => {
 		if (size !== 1) {
-			setSize(size - 1);
+			setSize(size - 1).catch(() => console.log('error'));
 		}
 	};
 

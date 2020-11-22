@@ -1,5 +1,4 @@
-import React from 'react';
-import { CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import css from './button.module.scss';
 
 interface Props {

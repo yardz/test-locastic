@@ -63,7 +63,10 @@ export const CheckoutForm = () => {
 					.finally(() => {
 						actions.setSubmitting(false);
 					})
-					.then(() => dispatch(checkoutActions.done()));
+					.then(() => dispatch(checkoutActions.done()))
+					.catch(() => {
+						console.log('ERRO');
+					});
 			}}>
 			{props => (
 				<Form>

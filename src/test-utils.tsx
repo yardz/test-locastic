@@ -7,9 +7,12 @@ import { store } from './store';
 
 export const renderPage = (component: React.ReactElement) => {
 	const history = createMemoryHistory();
-	let container = render(
+	const container = render(
 		<Provider store={store}>
-			<Router history={history as any}>{component}</Router>
+			{
+				// tslint:disable-next-line: no-any
+				<Router history={history as any}>{component}</Router>
+			}
 		</Provider>,
 	);
 	return { history, container };
