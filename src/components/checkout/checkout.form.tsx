@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../button';
 
@@ -19,21 +19,19 @@ const validationSchema = Yup.object().shape({
 	firstName: Yup.string()
 		.trim()
 		.required('First Name is a required field')
-		.matches(/^[a-zA-Z\s]*$/, 'Must be only letters'),
+		.matches(/^[a-zA-Z\s]*$/, 'First Name must be only letters'),
 	lastName: Yup.string()
 		.trim()
 		.required('Last Name is a required field')
-		.matches(/^[a-zA-Z\s]*$/, 'Must be only letters'),
-	email: Yup.string().trim().required('Email Address is a required field').email('Email Address must be a valid email'),
+		.matches(/^[a-zA-Z\s]*$/, 'Last Name must be only letters'),
+	email: Yup.string().trim().required('Email is a required field').email('Email Address must be a valid email'),
 	dateOfBirth: Yup.date().required('Date is a required field'),
 	gender: Yup.string().trim().required('Gender is a required field'),
 	address: Yup.string().trim().required('Address is a required field'),
 	zipCode: Yup.string()
 		.trim()
 		.required('Zip Code is a required field')
-		.matches(/^[0-9]+$/, 'Must be only digits')
-		.min(5, 'Must be exactly 5 digits')
-		.max(5, 'Must be exactly 5 digits'),
+		.matches(/^[0-9]+$/, 'Zip Code be only digits'),
 });
 
 interface InitalProps extends Omit<UserCheckout, 'dateOfBirth'> {
@@ -41,6 +39,7 @@ interface InitalProps extends Omit<UserCheckout, 'dateOfBirth'> {
 }
 
 export const CheckoutForm = () => {
+	const [error, setError] = useState(false);
 	const dispatch = useDispatch();
 	const order = useSelector(checkoutSelectors.getOrder);
 	const initialValues: InitalProps = {
@@ -59,13 +58,14 @@ export const CheckoutForm = () => {
 			validationSchema={validationSchema}
 			onSubmit={(userCheckout, actions) => {
 				const user = userCheckout as UserCheckout;
+				actions.setSubmitting(true);
 				orderCreateService({ user, order })
 					.finally(() => {
 						actions.setSubmitting(false);
 					})
 					.then(() => dispatch(checkoutActions.done()))
 					.catch(() => {
-						console.log('ERRO');
+						setError(true);
 					});
 			}}>
 			{props => (
@@ -96,6 +96,7 @@ export const CheckoutForm = () => {
 						</div>
 
 						<Button
+							id="btn-checkout"
 							disabled={props.isSubmitting}
 							type="submit"
 							color="Yellow"
@@ -106,6 +107,7 @@ export const CheckoutForm = () => {
 							}}>
 							Checkout
 						</Button>
+						{error && <div className={style.formError}>An error occurred while trying to complete the purchase. Please try again.</div>}
 					</div>
 				</Form>
 			)}

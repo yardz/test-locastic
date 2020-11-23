@@ -1,11 +1,8 @@
 import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react';
-import { useInfinite } from 'hooks/useInfinite';
 import React from 'react';
-import { store } from 'store';
-import { renderPage } from 'test-utils';
+import { renderPage, baseURL } from 'test-utils';
 import { Home } from './home.page';
-
-jest.mock('hooks/useInfinite');
+import nock from 'nock';
 
 const workshops = [
 	{
@@ -33,29 +30,35 @@ const workshops = [
 ];
 
 describe('home.page', () => {
+	let server: nock.Scope;
+
+	beforeAll(() => {
+		server = nock(baseURL).defaultReplyHeaders({
+			'access-control-allow-origin': '*',
+			'access-control-allow-credentials': 'true',
+		});
+	});
+
+	afterAll(() => {
+		nock.restore();
+	});
+
 	afterEach(() => {
+		nock.cleanAll();
 		jest.resetAllMocks();
 		cleanup();
 	});
 
-	it('show spinning when loading', async () => {
-		(useInfinite as jest.Mock).mockReturnValue({
-			isLoadingInitialData: true,
-			isLoading: true,
-			error: null,
-			data: [],
-		});
+	it('show spinning when loading', () => {
 		renderPage(<Home />);
 		screen.getByTestId('loading');
 	});
 
 	it('should display the workshops correctly', async () => {
-		(useInfinite as jest.Mock).mockReturnValue({
-			isLoadingInitialData: false,
-			isLoading: false,
-			error: null,
-			data: workshops,
-		});
+		server
+			.get(/\/workshops/i)
+			.delay(500)
+			.reply(200, workshops);
 		const { history } = renderPage(<Home />);
 		expect(history.location.pathname).toEqual('/');
 		await waitFor(() => screen.getByText(/When you get lost in API testing/i));
@@ -63,35 +66,35 @@ describe('home.page', () => {
 		expect(screen.getByTestId('ItensCount').textContent).toEqual('2');
 		expect(screen.getByTestId('WorkshopListItem-1').textContent).toMatch(/350.00 EUR/i);
 		expect(screen.getByTestId('WorkshopListItem-2').textContent).toMatch(/400.00 EUR/i);
-
 		fireEvent.click(screen.getByText(/When you get lost in API testing/i));
 		expect(history.location.pathname).toEqual('/workshop/1');
 	});
 
 	it('should not break the screen if an error occurs', async () => {
-		(useInfinite as jest.Mock).mockReturnValue({
-			isLoadingInitialData: false,
-			isLoading: false,
-			error: true,
-			data: [],
-		});
+		server
+			.get(/\/workshops/i)
+			.delay(500)
+			.reply(500);
 		renderPage(<Home />);
+
+		await waitFor(() => screen.getByTestId('ItensCount'));
+		await waitFor(() => screen.getByTestId('WorkshopList'));
+
 		expect(screen.getByTestId('ItensCount').textContent).toEqual('0');
 		expect(screen.getByTestId('WorkshopList').textContent).toEqual('');
 	});
 
 	it('should add item to cart', async () => {
-		(useInfinite as jest.Mock).mockReturnValue({
-			isLoadingInitialData: false,
-			isLoading: false,
-			error: null,
-			data: [workshops[0]],
-		});
-		renderPage(<Home />);
+		server
+			.get(/\/workshops/i)
+			.delay(500)
+			.reply(200, [workshops[0]]);
+		const { store } = renderPage(<Home />);
 
+		await waitFor(() => screen.getByText(/add to cart/i));
 		expect(store.getState().cart.itens).toEqual([]);
 		fireEvent.click(screen.getByText(/add to cart/i));
-		expect(store.getState().cart.itens).toEqual([{ ...workshops[0], quantity: 1 }]);
+		expect(store.getState().cart.itens).toEqual([{ ...workshops[0], date: 1611694310000, quantity: 1 }]);
 		expect(store.getState().cart.isOpen).toEqual(true);
 		expect(store.getState().cart.notification).toEqual(true);
 	});

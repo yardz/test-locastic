@@ -1,13 +1,12 @@
 // tslint:disable: max-file-line-count
-import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
-import { store } from 'store';
-import { renderPage } from 'test-utils';
+import { renderPage, baseURL } from 'test-utils';
 import { Details } from './details.page';
-import useSwr from 'swr';
+import nock from 'nock';
+import { Route } from 'react-router-dom';
 
-jest.mock('swr');
-
+const user = { name: 'user test' };
 const workshops = [
 	{
 		id: 1,
@@ -45,82 +44,100 @@ const workshops = [
 ];
 
 describe('details.page', () => {
+	let server: nock.Scope;
+
+	beforeAll(() => {
+		server = nock(baseURL).defaultReplyHeaders({
+			'access-control-allow-origin': '*',
+			'access-control-allow-credentials': 'true',
+		});
+	});
+
+	afterAll(() => {
+		nock.restore();
+	});
+
 	afterEach(() => {
+		nock.cleanAll();
 		jest.resetAllMocks();
 		cleanup();
 	});
 
 	it('show spinning when loading', async () => {
-		(useSwr as jest.Mock).mockReturnValueOnce({
-			error: null,
-			data: null,
-		});
 		renderPage(<Details />);
 		screen.getByTestId('loading');
 	});
 
-	it('should show the spinning while it has an error and has no data', async () => {
-		(useSwr as jest.Mock).mockReturnValueOnce({
-			error: true,
-			data: null,
-		});
-		renderPage(<Details />);
+	it('should retry fetch data until success', async () => {
+		server
+			.get(/\/workshops\/1/i)
+			.delay(200)
+			.reply(500)
+			.get(/\/workshops\/1/i)
+			.delay(200)
+			.reply(200, workshops[0]);
+		server.get('/users/1').reply(200, user);
+		server.get(/\/workshops\?/i).reply(200, []);
+
+		renderPage(<Route exact path={'/workshop/:workshopId'} component={Details} />, '/workshop/1');
 		screen.getByTestId('loading');
+		await waitForElementToBeRemoved(screen.queryByTestId('loading'), { timeout: 1500 });
+		await waitFor(() => screen.getByText(/When you get lost in API testing/i));
 	});
 
 	it('shuld show all items correctly', async () => {
-		(useSwr as jest.Mock)
-			// workshop
-			.mockReturnValueOnce({
-				error: null,
-				data: workshops[0],
-			})
-			// user
-			.mockReturnValueOnce({
-				error: null,
-				data: { name: 'user test' },
-			})
-			// similar workshops
-			.mockReturnValueOnce({
-				error: null,
-				data: [workshops[1], workshops[2]],
-			});
-		renderPage(<Details />);
+		server
+			.get(/\/workshops\/1/i)
+			.delay(500)
+			.reply(200, workshops[0]);
+		server.get('/users/1').delay(500).reply(200, user);
+		server
+			.get(/\/workshops\?/i)
+			.delay(800)
+			.reply(200, [workshops[1], workshops[2]]);
+
+		renderPage(<Route exact path={'/workshop/:workshopId'} component={Details} />, '/workshop/1');
+		screen.getByTestId('loading');
+		await waitForElementToBeRemoved(screen.queryByTestId('loading'));
 		screen.getByText(/When you get lost in API testing/i);
 		screen.getByText(/Subtotal: 350.00 EUR/i);
-
 		expect(screen.getByTestId('detail-price').textContent).toMatch(/350.00/i);
 		expect(screen.getByTestId('detail-meta').textContent).toMatch(/26.01.2021/i);
 		expect(screen.getByTestId('detail-meta').textContent).toMatch(/17:51h/i);
 
-		expect(screen.getByTestId('detail-with').textContent).toEqual('WITH: user test');
+		// loading name
+		await waitFor(() => expect(screen.getByTestId('detail-with').textContent).toEqual('WITH: user test'));
 
-		//similar workshops
+		// loading similar workshops
+		expect(screen.queryByText(/YouTube for your business/i)).not.toBeInTheDocument();
+		expect(screen.queryByText(/Voice - The new Frontend/i)).not.toBeInTheDocument();
 		await waitFor(() => screen.getByText(/YouTube for your business/i));
 		await waitFor(() => screen.getByText(/Voice - The new Frontend/i));
+		expect(screen.queryByText(/YouTube for your business/i)).toBeInTheDocument();
+		expect(screen.queryByText(/Voice - The new Frontend/i)).toBeInTheDocument();
 		expect(screen.getByTestId('WorkshopListItem-2').textContent).toMatch(/400.00 EUR/i);
 		expect(screen.getByTestId('WorkshopListItem-3').textContent).toMatch(/375.00 EUR/i);
 	});
 
 	it('should not show Similar Workshops if there is no one', async () => {
-		(useSwr as jest.Mock)
-			// workshop
-			.mockReturnValueOnce({
-				error: null,
-				data: workshops[0],
-			})
-			// user
-			.mockReturnValueOnce({
-				error: null,
-				data: { name: 'user test' },
-			})
-			// similar workshops
-			.mockReturnValueOnce({
-				error: null,
-				data: [],
-			});
-		renderPage(<Details />);
+		server
+			.get(/\/workshops\/1/i)
+			.delay(500)
+			.reply(200, workshops[0]);
+		server
+			.get('/users/1')
+			// workshops will load before user
+			.delay(800)
+			.reply(200, user);
+		server
+			.get(/\/workshops\?/i)
+			// workshops will load before user
+			.delay(200)
+			.reply(200, []);
+		renderPage(<Route exact path={'/workshop/:workshopId'} component={Details} />, '/workshop/1');
 
+		await waitForElementToBeRemoved(screen.queryByTestId('loading'));
+		await waitFor(() => expect(screen.getByTestId('detail-with').textContent).toEqual('WITH: user test'));
 		//similar workshops
 		await waitFor(() => {
 			expect(screen.queryByText(/Similar Workshops/i)).not.toBeInTheDocument();
@@ -128,27 +145,22 @@ describe('details.page', () => {
 	});
 
 	it('should add to cart', async () => {
-		(useSwr as jest.Mock)
-			// workshop
-			.mockReturnValueOnce({
-				error: null,
-				data: workshops[0],
-			})
-			// user
-			.mockReturnValueOnce({
-				error: null,
-				data: { name: 'user test' },
-			})
-			// similar workshops
-			.mockReturnValueOnce({
-				error: null,
-				data: [],
-			});
-		renderPage(<Details />);
+		server
+			.get(/\/workshops\/1/i)
+			.delay(500)
+			.reply(200, workshops[0]);
+		server.get('/users/1').delay(200).reply(200, user);
+		server
+			.get(/\/workshops\?/i)
+			.delay(200)
+			.reply(200, []);
 
+		const { store } = renderPage(<Route exact path={'/workshop/:workshopId'} component={Details} />, '/workshop/1');
+
+		await waitForElementToBeRemoved(screen.queryByTestId('loading'));
 		expect(store.getState().cart.itens).toEqual([]);
 		fireEvent.click(screen.getByText(/icon-cart.svg/i));
-		expect(store.getState().cart.itens).toEqual([{ ...workshops[0], quantity: 1 }]);
+		expect(store.getState().cart.itens).toEqual([{ ...workshops[0], date: 1611694310000, quantity: 1 }]);
 		expect(store.getState().cart.isOpen).toEqual(false);
 		expect(store.getState().cart.notification).toEqual(true);
 	});

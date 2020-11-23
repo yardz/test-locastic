@@ -27,7 +27,7 @@ export const Select: React.FC<Props> = ({ label, name, placeholder, options }) =
 					<h6>{label}</h6>
 					{meta.touched && <span className={style.error}>{meta.error}</span>}
 				</label>
-				<select className={style.input} id={name} {...field}>
+				<select className={style.input} id={name} data-testid={name} {...field}>
 					{!field.value && <option value="">{placeholder}</option>}
 
 					{options.map(option => (

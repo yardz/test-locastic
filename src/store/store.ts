@@ -7,7 +7,7 @@ import storage from 'redux-persist/lib/storage';
 import { cartSlice } from './cartReducer';
 import { checkoutSlice } from './checkoutReducer';
 
-const reducers = combineReducers({
+export const reducers = combineReducers({
 	cart: cartSlice.reducer,
 	checkout: checkoutSlice.reducer,
 });

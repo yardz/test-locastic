@@ -27,7 +27,7 @@ export const Input: React.FC<Props> = ({ label, name, placeholder, type }) => {
 					<h6>{label}</h6>
 					{meta.touched && <span className={style.error}>{meta.error}</span>}
 				</label>
-				<input type={type} className={style.input} id={name} {...field} placeholder={placeholder} />
+				<input type={type} className={style.input} id={name} data-testid={name} {...field} placeholder={placeholder} />
 			</div>
 		</div>
 	);

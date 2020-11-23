@@ -42,6 +42,5 @@ export const Details = () => {
 	if (!workshop.data) {
 		return <Loading />;
 	}
-
 	return <WorkshopDetails workshop={workshop.data} user={user.data} similarWorkshops={similarWorkshops.data} />;
 };
