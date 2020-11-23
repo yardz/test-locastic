@@ -4,6 +4,34 @@ import { renderPage, baseURL } from 'test-utils';
 import { Checkout } from './checkout.page';
 import nock from 'nock';
 import userEvent from '@testing-library/user-event';
+import { checkoutActions } from 'store/checkoutReducer';
+
+const itens = [
+	{
+		id: 1,
+		title: 'When you get lost in API testing',
+		desc:
+			"The toughest part is probably to figure out which type of tests to write and how to test some specific logic in your app - but don't give up! Paula will present a few tips she learned along the way that will hopefully make your life easier. In this talk, you will hear about different test types and when to use them, real examples based on PHPUnit and Postman, followed by some tools for checking the test quality",
+		price: 100,
+		date: 1611694310000,
+		category: 'backend',
+		userId: 1,
+		imageUrl: 'https://pbs.twimg.com/media/EREoip3XsAEPDRp.jpg',
+		quantity: 1,
+	},
+	{
+		id: 2,
+		title: 'YouTube for your business!',
+		desc:
+			'Aleksandar Ašković aka Kojot is one of the pioneers when it comes to regional YouTube expertise. His tech journey started at the age of 12 when he inserted the first coin into the arcade machine. In 1997 he becomes editor of the renowned Serbian magazine “Svet Kompjutera” and in 2001 he started his first TV show called Game Over. After that, it was time to become a bit serious so in 2019 KursorTV was born, a TV show that was covering mostly tech topics. In 2014 Aleksandar decided to make a switch in his career and dedicate his time to YouTube. During the last 5 years, he was focused on helping brands utilize this platform to a full extent. Kojot considers YouTube channel of “Sport Klub” the prime example of YouTube SEO power. Thanks to the great content and good optimization Sport Klub channel reached[masked] subscribers in under 18 months.',
+		price: 25,
+		date: 1611694310000,
+		category: 'marketing',
+		userId: 2,
+		imageUrl: 'https://pbs.twimg.com/media/EL--sgSXYAAnOX2.jpg',
+		quantity: 2,
+	},
+];
 
 describe('checkout.page', () => {
 	let server: nock.Scope;
@@ -27,11 +55,17 @@ describe('checkout.page', () => {
 
 	it('should complete the order correctly', async () => {
 		server
-			.post(/\/orders/i)
+			.post(/\/orders/i, body => {
+				expect(body.products).toEqual(itens);
+				expect(body.id).toEqual(expect.any(Number));
+				expect(body.total).toEqual(150);
+				return true;
+			})
 			.delay(500)
 			.reply(201);
 
 		const { store } = renderPage(<Checkout />);
+		store.dispatch(checkoutActions.start(itens));
 		expect(server.isDone()).toEqual(false);
 		await act(async () => {
 			await userEvent.type(screen.getByTestId('firstName'), 'Bruno');
@@ -59,6 +93,7 @@ describe('checkout.page', () => {
 			.reply(201);
 
 		const { store } = renderPage(<Checkout />);
+		store.dispatch(checkoutActions.start(itens));
 		expect(server.isDone()).toEqual(false);
 		await act(async () => {
 			expect(store.getState().checkout.isComplete).toEqual(false);
@@ -94,6 +129,7 @@ describe('checkout.page', () => {
 			.reply(500);
 
 		const { store } = renderPage(<Checkout />);
+		store.dispatch(checkoutActions.start(itens));
 		expect(server.isDone()).toEqual(false);
 		await act(async () => {
 			await userEvent.type(screen.getByTestId('firstName'), 'Bruno');
